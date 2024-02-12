@@ -1,0 +1,74 @@
+{
+	"name": "UMR1283",
+	"runArgs": ["--name", "${localEnv:USER}--${localWorkspaceFolderBasename}--devcontainer"],
+	"remoteUser": "${localEnv:USER}",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"IMAGE": "umr1283/umr1283:4.1.3",
+			"USERNAME": "${localEnv:USER}"
+		}
+	},
+	"containerEnv": {
+		"RENV_PATHS_CACHE": "/renv_cache",
+		"PKG_CONFIG_PATH":"/usr/lib/x86_64-linux-gnu/pkgconfig"
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/Isiprod1/project/${localWorkspaceFolderBasename},type=bind",
+	"workspaceFolder": "/Isiprod1/project/${localWorkspaceFolderBasename}",
+	"mounts": [
+		"source=/Isiprod1/user,target=/home,type=bind,consistency=cached",
+		"source=/Isiprod1,target=/Isiprod1,type=bind,consistency=cached",
+		"source=/Isiprod1/datatmp/dockertmp/renv_pkgs_cache,target=/renv_cache,type=bind,consistency=cached",
+		"source=/etc/localtime,target=/etc/localtime,type=bind,consistency=cached"
+	],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.tabSize": 2,
+				"files.trimFinalNewlines": true,
+				"files.insertFinalNewline": true,
+				"files.watcherExclude": {
+						"**.Rproj": true,
+						"**/.cache/**": true,
+						"**/.local/**": true,
+						"**/.Rproj.user/**": true,
+						"**/.vscode/**": true
+				},
+				"files.exclude": {
+						"**.Rproj": true,
+						"**/.Rproj.user": true
+				},
+				"files.eol": "\n",
+				"r.plot.useHttpgd": true,
+				"r.rterm.option": [
+					"--no-save",
+					"--no-restore-data",
+					"--quiet"
+				],
+				"r.rmarkdown.knit.defaults.knitWorkingDirectory": "workspace root",
+				"r.libPaths": [
+					"/usr/local/lib/R/site-library",
+					"/usr/local/lib/R/library"
+				],
+				"r.plot.defaults.fullWindowMode": true,
+				"path-autocomplete.triggerOutsideStrings": true,
+				"path-autocomplete.pathMappings": {
+						"/": "/",
+						"./": "${folder}"
+				},
+				"gitlab.instanceUrl": "http://gitlab.egid.local/"
+			},
+			"extensions": [
+				"quarto.quarto",
+				"gitlab.gitlab-workflow",
+				"usernamehw.errorlens",
+				"eamodio.gitlens",
+				"ms-vscode.live-server",
+				"ionutvmi.path-autocomplete",
+				"DavidAnson.vscode-markdownlint",
+				"REditorSupport.r",
+				"RDebugger.r-debugger"
+			]
+		}
+	}
+}
